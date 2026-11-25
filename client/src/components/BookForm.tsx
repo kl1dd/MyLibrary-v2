@@ -1,6 +1,6 @@
 import { useState } from "react";
-import type { ReadingStatus } from "../types/book";
-import type { Book } from "../types/book";
+import type { ReadingStatus } from "../../../shared/types";
+import type { Book } from "../../../shared/types";
 
 type BookFormProps = {
   initialBook: Book | null;

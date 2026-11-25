@@ -1,4 +1,4 @@
-import type { Book } from "../types/book";
+import type { Book } from "../../../shared/types";
 import { useState } from "react";
 import { BookForm } from "../components/BookForm";
 import { BookCard } from "../components/BookCard";

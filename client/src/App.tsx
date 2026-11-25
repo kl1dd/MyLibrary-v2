@@ -1,8 +1,8 @@
 import { AppLayout } from "./components/AppLayout";
 import { DashboardPage } from "./pages/DashboardPage";
-import type { Book } from "./types/book";
+import type { Book } from "../../shared/types";
 import { useState } from "react";
-import type { ReadingStatus } from "./types/book";
+import type { ReadingStatus } from "../../shared/types";
 import { useLocalStorage } from "./hooks/useLocalStorage";
 
 export function App() {
