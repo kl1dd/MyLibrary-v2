@@ -16,14 +16,22 @@ export function BookForm({ initialBook, onAddBook, onUpdateBook, onSaved }: Book
   const [status, setStatus] = useState<ReadingStatus>(initialBook?.status ?? "planned");
   const [rating, setRating] = useState<number | null>(initialBook?.rating ?? null);
   const [note, setNote] = useState(initialBook?.note ?? "");
+  const [saving, setSaving] = useState(false);
 
   async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
+
+    if (saving) {
+      return;
+    }
+
 
     if (!title.trim() || !author.trim()) {
       alert("Обязательно нужно заполнить название и автора");
       return;
     }
+
+    setSaving(true);
     
     try {
       if (initialBook) {
@@ -53,6 +61,8 @@ export function BookForm({ initialBook, onAddBook, onUpdateBook, onSaved }: Book
       onSaved();
     } catch {
       // ошибка обрабатывается в App.tsx, а вот форму мы оставляем открытой
+    } finally {
+      setSaving(false);
     }
   }
 
@@ -131,9 +141,10 @@ export function BookForm({ initialBook, onAddBook, onUpdateBook, onSaved }: Book
         />
       </div>
 
-
-      <button type="submit" className="btn btn-primary mt-3">
-        {initialBook ? "Сохранить изменения" : "Сохранить книгу"}
+      <button type="submit" className="btn btn-primary mt-3" disabled={saving}>
+        {saving ? "Сохранение..."
+                : initialBook ? "Сохранить изменения"
+                              : "Сохранить книгу"}
       </button>
     </form>
   );

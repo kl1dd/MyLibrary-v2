@@ -25,6 +25,9 @@ export function BookPage() {
         }
 
         const data = await getBook(id, controller.signal);
+        if (!controller.signal.aborted) {
+          setBook(data);
+        }
 
         setBook(data);
       } catch {

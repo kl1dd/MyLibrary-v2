@@ -9,9 +9,11 @@ type DashboardPageProps = {
   onAddBook: (data: CreateBookData) => Promise<void>;
   onDeleteBook: (id: string) => Promise<void>;
   onUpdateBook: (id: string, data: UpdateBookData) => Promise<void>;
+  loading: boolean;
+  error: string | null;
 };
 
-export function DashboardPage({ books, allBooks, onAddBook, onDeleteBook, onUpdateBook }: DashboardPageProps) {
+export function DashboardPage({ books, allBooks, onAddBook, onDeleteBook, onUpdateBook, loading, error }: DashboardPageProps) {
   const finishedCount = allBooks.filter(
     (book) => book.status === "finished"
   ).length;
@@ -102,18 +104,27 @@ export function DashboardPage({ books, allBooks, onAddBook, onDeleteBook, onUpda
 
 
 
-      {books.length === 0 ? (
+      {loading ? (
+        <p className="mt-4">Загрузка книг...</p>
+      ) : error ? (
+        <div className="alert alert-danger mt-4">
+          {error}
+        </div>
+      ) : books.length === 0 ? (
         <div className="alert alert-info mt-4">
           {allBooks.length === 0
-                      ? "В библиотеке пока нет книг."
-                      : "По вашему запросу ничего не найдено."
-          }
+            ? "В библиотеке пока нет книг."
+            : "По вашему запросу ничего не найдено."}
         </div>
       ) : (
         <div className="row g-3 mt-3">
           {books.map((book) => (
             <div className="col-12 col-md-6 col-xl-4" key={book.id}>
-              <BookCard book={book} onDeleteBook={onDeleteBook} onEditBook={handleEditBook}/>
+              <BookCard
+                book={book}
+                onDeleteBook={onDeleteBook}
+                onEditBook={handleEditBook}
+              />
             </div>
           ))}
         </div>

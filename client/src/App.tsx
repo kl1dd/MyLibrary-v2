@@ -151,6 +151,9 @@ export function App() {
         setError(null);
 
         const books = await getBooks(query, controller.signal);
+        if (!controller.signal.aborted) {
+          setVisibleBooks(books);
+        }
 
         setVisibleBooks(books);
       } catch {
@@ -205,18 +208,13 @@ export function App() {
       </select>
       
 
-      {(loading || allBooksLoading) && (
+      {allBooksLoading && (
         <p>Загрузка книг...</p>
       )}
-      {(error || allBooksError) && (
-        <div className="alert alert-danger">
-          {error || allBooksError}
-        </div>
-      )}
 
-      {actionError && (
+      {allBooksError && (
         <div className="alert alert-danger">
-          {actionError}
+          {allBooksError}
         </div>
       )}
 
@@ -227,6 +225,8 @@ export function App() {
           onAddBook={addBook}
           onDeleteBook={deleteBook}
           onUpdateBook={updateBook}
+          loading={loading}
+          error={error}
         />
       )}
     </>
