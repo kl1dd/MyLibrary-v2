@@ -24,7 +24,7 @@ export function BookPage() {
           throw new Error("ID книги отсутствует");
         }
 
-        const data = await getBook(id);
+        const data = await getBook(id, controller.signal);
 
         setBook(data);
       } catch {

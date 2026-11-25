@@ -1,7 +1,5 @@
 import { NavLink, useLocation } from "react-router";
 
-type Page = "books" | "rated";
-
 export function Sidebar() {
   const location = useLocation();
 

@@ -3,7 +3,6 @@ import { DashboardPage } from "./pages/DashboardPage";
 import type { Book, CreateBookData, UpdateBookData } from "../../shared/types";
 import { useState, useEffect } from "react";
 import { getBooks, createBook, updateBook as updateBookApi, deleteBook as deleteBookApi } from "./api/books";
-import type { ReadingStatus } from "../../shared/types";
 import { Routes, Route, Navigate, useLocation, useNavigate, useSearchParams } from "react-router";
 import { BookPage } from "./pages/BookPage";
 
@@ -151,7 +150,7 @@ export function App() {
         setLoading(true);
         setError(null);
 
-        const books = await getBooks(query);
+        const books = await getBooks(query, controller.signal);
 
         setVisibleBooks(books);
       } catch {
