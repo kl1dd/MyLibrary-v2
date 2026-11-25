@@ -1,11 +1,11 @@
 import { useState } from "react";
 import type { ReadingStatus } from "../../../shared/types";
-import type { Book } from "../../../shared/types";
+import type { Book, CreateBookData, UpdateBookData } from "../../../shared/types";
 
 type BookFormProps = {
   initialBook: Book | null;
-  onAddBook: (book: Book) => void;
-  onUpdateBook: (book: Book) => void;
+  onAddBook: (data: CreateBookData) => Promise<void>;
+  onUpdateBook: (id: string, data: UpdateBookData) => Promise<void>;
   onSaved: () => void
 };
 
@@ -17,7 +17,7 @@ export function BookForm({ initialBook, onAddBook, onUpdateBook, onSaved }: Book
   const [rating, setRating] = useState<number | null>(initialBook?.rating ?? null);
   const [note, setNote] = useState(initialBook?.note ?? "");
 
-  function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.SubmitEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!title.trim() || !author.trim()) {
@@ -25,23 +25,35 @@ export function BookForm({ initialBook, onAddBook, onUpdateBook, onSaved }: Book
       return;
     }
     
-    const book: Book = {
-      id: initialBook?.id ?? crypto.randomUUID(),
-      title: title.trim(),
-      author: author.trim(),
-      genre: genre.trim(),
-      status,
-      rating,
-      note: note.trim(),
-    };
-    if (initialBook) {
-      onUpdateBook(book);
-    } else {
-      onAddBook(book);
+    try {
+      if (initialBook) {
+        const book: UpdateBookData = {
+          title: title.trim(),
+          author: author.trim(),
+          genre: genre.trim(),
+          status,
+          rating,
+          note: note.trim(),
+        };
+        
+        await onUpdateBook(initialBook.id, book);
+      } else {
+        const book: CreateBookData = {
+          title: title.trim(),
+          author: author.trim(),
+          genre: genre.trim(),
+          status,
+          rating,
+          note: note.trim(),
+        };
+
+        await onAddBook(book);
+      }
+
+      onSaved();
+    } catch {
+      // ошибка обрабатывается в App.tsx, а вот форму мы оставляем открытой
     }
-
-
-    onSaved();
   }
 
 

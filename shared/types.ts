@@ -9,3 +9,21 @@ export type Book = {
   rating: number | null;
   note: string;
 };
+
+export type CreateBookData = {
+  title: string;
+  author: string;
+  genre: string;
+  status: ReadingStatus;
+  rating: number | null;
+  note: string;
+};
+
+export type UpdateBookData = {
+  title?: string;
+  author?: string;
+  genre?: string;
+  status?: ReadingStatus;
+  rating?: number | null;
+  note?: string;
+};

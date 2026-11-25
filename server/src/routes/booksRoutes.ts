@@ -56,7 +56,7 @@ const router = Router();
 router.get("/", (req, res) => {
   let books = readBooks();
 
-  const { search, status, rated } = req.query;
+  const { search, status, rated, genre } = req.query;
 
   if (typeof search === "string" && search.trim()) {
     const value = search.trim().toLowerCase();
@@ -72,6 +72,10 @@ router.get("/", (req, res) => {
 
   if (rated === "true") {
     books = books.filter((book) => book.rating !== null);
+  }
+
+  if (typeof genre === "string" && genre !== "all") {
+    books = books.filter((book) => book.genre.trim() === genre);
   }
 
   res.status(200).json(books);

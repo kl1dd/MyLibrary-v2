@@ -1,4 +1,4 @@
-import type { Book } from "../../../shared/types";
+import type { Book, CreateBookData, UpdateBookData } from "../../../shared/types";
 import { useState } from "react";
 import { BookForm } from "../components/BookForm";
 import { BookCard } from "../components/BookCard";
@@ -6,9 +6,9 @@ import { BookCard } from "../components/BookCard";
 type DashboardPageProps = {
   books: Book[];
   allBooks: Book[];
-  onAddBook: (book: Book) => void;
-  onDeleteBook: (id: string) => void;
-  onUpdateBook: (book: Book) => void;
+  onAddBook: (data: CreateBookData) => Promise<void>;
+  onDeleteBook: (id: string) => Promise<void>;
+  onUpdateBook: (id: string, data: UpdateBookData) => Promise<void>;
 };
 
 export function DashboardPage({ books, allBooks, onAddBook, onDeleteBook, onUpdateBook }: DashboardPageProps) {

@@ -9,5 +9,10 @@ export default defineConfig({
         silenceDeprecations: ["import", "color-functions", "global-builtin", "if-function"]
       }
     }
-  }
+  },
+  server: {
+    proxy: {
+      "/api": "http://localhost:3000",
+    },
+  },
 });

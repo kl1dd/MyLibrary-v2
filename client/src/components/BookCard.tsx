@@ -1,4 +1,5 @@
 import type { Book } from "../../../shared/types";
+import { Link } from "react-router";
 
 type BookCardProps = {
   book: Book;
@@ -16,7 +17,15 @@ export function BookCard({ book, onDeleteBook, onEditBook }: BookCardProps) {
   return (
     <article className="card h-100">
       <div className="card-body">
-        <h3 className="h5">{book.title}</h3>
+        <h3 className="h5">
+          <Link
+            to={`/books/${book.id}`}
+            className="link-primary text-decoration-none"
+          >
+            {book.title}
+          </Link>
+        </h3>
+
         <p className="text-secondary mb-2">{book.author}</p>
         <p className="mb-2">Жанр: {book.genre}</p>
         <p className="mb-0">Статус: {statusLabels[book.status]}</p>
