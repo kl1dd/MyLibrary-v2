@@ -154,8 +154,6 @@ export function App() {
         if (!controller.signal.aborted) {
           setVisibleBooks(books);
         }
-
-        setVisibleBooks(books);
       } catch {
         if (!controller.signal.aborted) {
           setError("Не удалось загрузить книги");
@@ -215,6 +213,12 @@ export function App() {
       {allBooksError && (
         <div className="alert alert-danger">
           {allBooksError}
+        </div>
+      )}
+
+      {actionError && (
+        <div className="alert alert-danger">
+          {actionError}
         </div>
       )}
 

@@ -28,8 +28,6 @@ export function BookPage() {
         if (!controller.signal.aborted) {
           setBook(data);
         }
-
-        setBook(data);
       } catch {
         if (!controller.signal.aborted) {
           setError("Не удалось загрузить книгу");
